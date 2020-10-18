@@ -16,7 +16,7 @@ bool initializeSystem(){
     }
     std::shared_ptr<Serial> serial2(new Serial());
     boolean res2 = serial2->open("COM3", 1200, 8, 1, 0);
-    if(!res1){
+    if(!res2){
         std::cout << "Error Opening Serial";
         return false;
     }
