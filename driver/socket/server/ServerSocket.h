@@ -16,7 +16,8 @@ using boost::asio::ip::tcp;
 
 class ServerSocket {
 private:
-    uint8_t connectionNum = 0;
+    uint8_t connections = 0;
+    std::mutex mutex;
     boost::asio::io_service io_service;
     std::shared_ptr<std::thread> taskAcceptConnetions;
     std::vector<std::shared_ptr<tcp::socket>> clientConnected;
