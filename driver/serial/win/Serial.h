@@ -5,6 +5,7 @@
 #ifndef TEST_SERIAL_H
 #define TEST_SERIAL_H
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <cstdint>
 #include <string>
@@ -26,14 +27,14 @@ private:
 
     HANDLE hComm=NULL;
 
-    boolean initialized=false;
+    bool initialized=false;
     std::thread task;
 
     vector<std::shared_ptr<SerialSubscriber>> subscribers;
 
 public:
     Serial(){}
-    boolean open(std::string port, uint16_t baudrate, uint8_t databits,
+    bool open(std::string port, uint16_t baudrate, uint8_t databits,
               uint8_t stopbits, uint8_t parity);
     void write(char* message, int len);
     void read(char* SerialBuffer, int& len);
@@ -44,7 +45,7 @@ public:
     void join(){
         this->task.join();
     }
-    boolean isInitialized(){
+    bool isInitialized(){
         return this->initialized;
     }
     std::string getPort(){

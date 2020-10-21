@@ -7,11 +7,14 @@
 #include <iomanip>
 #include <string.h>
 #include <chrono>
+#include <sstream>
 
-void printHexBinary(char* data, int len){
+std::string printHexBinary(char* data, int len){
+    std::stringstream ss;
     for(int i=0; i<len; ++i) {
-        std::cout << std::setfill('0') << std::setw(2) << std::hex << (unsigned int) (data[i] & 0xFF);
+        ss << std::setfill('0') << std::setw(2) << std::hex << (unsigned int) (data[i] & 0xFF);
     }
+    return ss.str();
 }
 
 std::string getActualTimestamp(){

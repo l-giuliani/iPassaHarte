@@ -7,7 +7,7 @@
 
 #include <string>
 
-void printHexBinary(char* data, int len);
+std::string printHexBinary(char* data, int len);
 std::string getActualTimestamp();
 
 #endif //IPASSAHARTE_UTILS_H

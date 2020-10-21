@@ -6,16 +6,17 @@
 #include "Serial.h"
 #include <memory>
 #include "serialReaderLib.h"
+#include "ServerSocket.h"
 
 bool initializeSystem(){
     std::shared_ptr<Serial> serial(new Serial());
-    boolean res1 = serial->open("COM1", 1200, 8, 1, 0);
+    bool res1 = serial->open("COM1", 1200, 8, 1, 0);
     if(!res1){
         std::cout << "Error Opening Serial";
         return false;
     }
     std::shared_ptr<Serial> serial2(new Serial());
-    boolean res2 = serial2->open("COM3", 1200, 8, 1, 0);
+    bool res2 = serial2->open("COM3", 1200, 8, 1, 0);
     if(!res2){
         std::cout << "Error Opening Serial";
         return false;
@@ -27,6 +28,12 @@ bool initializeSystem(){
     std::shared_ptr<SerialSubscriber> serialReaderLib2 = std::make_shared<SerialReaderLib>(serial);
     serial->subscribe(serialReaderLib);
     serial2->subscribe(serialReaderLib2);
+
+    //socketServer start
+    std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>();
+    serialReaderLib->setServerSocket(serverSocket);
+    serialReaderLib2->setServerSocket(serverSocket);
+
     serial->join();
     serial2->join();
     return true;

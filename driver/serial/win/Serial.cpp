@@ -8,7 +8,7 @@
 #include <thread>
 #include "SerialReader.h"
 
-boolean Serial::open(std::string port, uint16_t baudrate, uint8_t databits,
+bool Serial::open(std::string port, uint16_t baudrate, uint8_t databits,
                   uint8_t stopbits, uint8_t parity){
     this->hComm = CreateFile(("\\\\.\\"+port).c_str(),                //port name
     GENERIC_READ | GENERIC_WRITE, //Read/Write
