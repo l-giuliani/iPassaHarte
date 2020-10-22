@@ -22,7 +22,6 @@ void waitForIncomingData(Serial* serial){
                 (*it)->onData(SerialBuffer, len, serial->getPort());
             }
         }
-        //FIXME should be platform indipendent
-        Sleep(10);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
