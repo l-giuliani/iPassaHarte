@@ -7,16 +7,24 @@
 #include <memory>
 #include "serialReaderLib.h"
 #include "ServerSocket.h"
+#include "ConfigLib.h"
+#include "SerialDTO.h"
 
 bool initializeSystem(){
+    ConfigLib configLib;
+    SerialDTO::SerialConf serialConf1 = configLib.readSerialConf("SERIAL1");
+    SerialDTO::SerialConf serialConf2 = configLib.readSerialConf("SERIAL2");
+
     std::shared_ptr<Serial> serial(new Serial());
-    bool res1 = serial->open("COM1", 1200, 8, 1, 0);
+    bool res1 = serial->open(serialConf1.port, serialConf1.baudrate, serialConf1.dataBits,
+                             serialConf1.stopBits, serialConf1.parity);
     if(!res1){
         std::cout << "Error Opening Serial";
         return false;
     }
     std::shared_ptr<Serial> serial2(new Serial());
-    bool res2 = serial2->open("COM3", 1200, 8, 1, 0);
+    bool res2 = serial2->open(serialConf2.port, serialConf2.baudrate, serialConf2.dataBits,
+                              serialConf2.stopBits, serialConf2.parity);
     if(!res2){
         std::cout << "Error Opening Serial";
         return false;
