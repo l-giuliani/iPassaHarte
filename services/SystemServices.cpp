@@ -10,13 +10,15 @@
 #include "ConfigLib.h"
 #include "SerialDTO.h"
 
-bool initializeSystem(){
+void initFeatures(int argc, char *argv[], std::shared_ptr<SerialSubscriber> serialReaderLib, std::shared_ptr<SerialSubscriber> serialReaderLib2);
+
+bool SystemService::initializeSystem(int argc, char *argv[]){
     ConfigLib configLib;
     SerialDTO::SerialConf serialConf1 = configLib.readSerialConf("SERIAL1");
     SerialDTO::SerialConf serialConf2 = configLib.readSerialConf("SERIAL2");
 
-    std::shared_ptr<Serial> serial(new Serial());
-    bool res1 = serial->open(serialConf1.port, serialConf1.baudrate, serialConf1.dataBits,
+    std::shared_ptr<Serial> serial1(new Serial());
+    bool res1 = serial1->open(serialConf1.port, serialConf1.baudrate, serialConf1.dataBits,
                              serialConf1.stopBits, serialConf1.parity);
     if(!res1){
         std::cout << "Error Opening Serial";
@@ -31,22 +33,28 @@ bool initializeSystem(){
     }
 
     //std::shared_ptr<SerialSubscriber> serialReaderLib(dynamic_cast<SerialSubscriber*>(new SerialReaderLib(serial2)));
-    std::shared_ptr<SerialSubscriber> serialReaderLib = std::make_shared<SerialReaderLib>(serial2);
+    std::shared_ptr<SerialSubscriber> serialReaderLib1 = std::make_shared<SerialReaderLib>(serial2);
+    std::shared_ptr<SerialSubscriber> serialReaderLib2 = std::make_shared<SerialReaderLib>(serial1);
 
-    std::shared_ptr<SerialSubscriber> serialReaderLib2 = std::make_shared<SerialReaderLib>(serial);
-    serial->subscribe(serialReaderLib);
+    serial1->subscribe(serialReaderLib1);
     serial2->subscribe(serialReaderLib2);
 
-    //socketServer start
-    std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>();
-    serialReaderLib->setServerSocket(serverSocket);
-    serialReaderLib2->setServerSocket(serverSocket);
+    initFeatures(argc, argv, serialReaderLib1, serialReaderLib2);
 
-    serial->join();
+    serial1->join();
     serial2->join();
     return true;
 }
 
-void initializeSocket(){
-
+void initFeatures(int argc, char *argv[], std::shared_ptr<SerialSubscriber> serialReaderLib1, std::shared_ptr<SerialSubscriber> serialReaderLib2){
+    for(int i=0;i<argc;i++){
+        if(strcmp(argv[i], "-socket") == 0){
+            //socketServer start
+            std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>();
+            serialReaderLib1->setServerSocket(serverSocket);
+            serialReaderLib2->setServerSocket(serverSocket);
+        } else if(strcmp(argv[i], "-file") == 0){
+            //TODO
+        }
+    }
 }

@@ -36,6 +36,8 @@ public:
 
         std::string s = ss.str();
 
+        std::cout << s;
+
         if(this->serverSocket != nullptr) {
             serverSocket->sendToClients(s);
         }

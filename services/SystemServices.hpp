@@ -5,7 +5,8 @@
 #ifndef IPASSAHARTE_SYSTEMSERVICES_HPP
 #define IPASSAHARTE_SYSTEMSERVICES_HPP
 
-bool initializeSystem();
-void initializeSocket();
+namespace  SystemService {
+    bool initializeSystem(int argc, char *argv[]);
+}
 
 #endif //IPASSAHARTE_SYSTEMSERVICES_HPP

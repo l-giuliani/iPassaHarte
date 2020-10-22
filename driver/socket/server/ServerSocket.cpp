@@ -33,7 +33,6 @@ void ServerSocket::sendToClients(std::string message){
             //sign to remove connection
             elementsToErase.push_back(index);
         }
-        std::cout << "written bytes: " << bytesWritten << "\n";
         index++;
     }
     for (int i=0; i<elementsToErase.size(); ++i){
