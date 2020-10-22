@@ -15,9 +15,8 @@ void waitForIncomingData(Serial* serial){
         int len = 0;
         serial->read(SerialBuffer, len);
         std::string resp(SerialBuffer);
-        //std::cout<<"\nserialdata: "<< resp << strlen(SerialBuffer)<<std::flush;
+
         if(strlen(SerialBuffer) > 0) {
-            //std::cout << "cane\n"<<std::flush;
             std::vector<std::shared_ptr<SerialSubscriber>> subscribers = serial->getSubscribers();
             for (std::vector<std::shared_ptr<SerialSubscriber>>::iterator it = subscribers.begin() ; it != subscribers.end(); ++it) {
                 (*it)->onData(SerialBuffer, len, serial->getPort());

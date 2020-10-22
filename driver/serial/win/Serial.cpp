@@ -103,11 +103,7 @@ void Serial::subscribe(std::shared_ptr<SerialSubscriber> serialSubscriber){
 }
 
 Serial::~Serial(){
-    if(this->hComm != NULL) {
-        CloseHandle(this->hComm);
-    }
-    this->initialized = false;
-    this->task.join();
+    this->close();
 }
 
 vector <std::shared_ptr<SerialSubscriber>> Serial::getSubscribers() {
