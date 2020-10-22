@@ -13,3 +13,7 @@ SerialDTO::SerialConf ConfigLib::readSerialConf(std::string serialEntry){
     serialConf.stopBits = pt.get<uint8_t>(serialEntry + ".stopbits");
     return serialConf;
 }
+
+uint32_t ConfigLib::readSocketServerPort(){
+    return pt.get<uint32_t>("SOCKETSERVER.port");
+}

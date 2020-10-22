@@ -20,6 +20,7 @@ public:
         boost::property_tree::ini_parser::read_ini(CONFIG_FILE, pt);
     }
     SerialDTO::SerialConf readSerialConf(std::string serialEntry);
+    uint32_t readSocketServerPort();
 };
 
 #endif //IPASSAHARTE_CONFIGLIB_H

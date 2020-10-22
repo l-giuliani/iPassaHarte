@@ -22,7 +22,7 @@ private:
     std::shared_ptr<std::thread> taskAcceptConnetions;
     std::vector<std::shared_ptr<tcp::socket>> clientConnected;
 public:
-    ServerSocket();
+    ServerSocket(uint32_t port);
     void acceptConnections(std::shared_ptr<tcp::acceptor> acceptor);
     void sendToClients(std::string message);
 };

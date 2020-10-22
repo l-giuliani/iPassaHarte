@@ -10,7 +10,7 @@
 #include "ConfigLib.h"
 #include "SerialDTO.h"
 
-void initFeatures(int argc, char *argv[], std::shared_ptr<SerialSubscriber> serialReaderLib, std::shared_ptr<SerialSubscriber> serialReaderLib2);
+void initFeatures(ConfigLib& configLib, int argc, char *argv[], std::shared_ptr<SerialSubscriber> serialReaderLib, std::shared_ptr<SerialSubscriber> serialReaderLib2);
 
 bool SystemService::initializeSystem(int argc, char *argv[]){
     ConfigLib configLib;
@@ -39,18 +39,18 @@ bool SystemService::initializeSystem(int argc, char *argv[]){
     serial1->subscribe(serialReaderLib1);
     serial2->subscribe(serialReaderLib2);
 
-    initFeatures(argc, argv, serialReaderLib1, serialReaderLib2);
+    initFeatures(configLib, argc, argv, serialReaderLib1, serialReaderLib2);
 
     serial1->join();
     serial2->join();
     return true;
 }
 
-void initFeatures(int argc, char *argv[], std::shared_ptr<SerialSubscriber> serialReaderLib1, std::shared_ptr<SerialSubscriber> serialReaderLib2){
+void initFeatures(ConfigLib& configLib, int argc, char *argv[], std::shared_ptr<SerialSubscriber> serialReaderLib1, std::shared_ptr<SerialSubscriber> serialReaderLib2){
     for(int i=0;i<argc;i++){
         if(strcmp(argv[i], "-socket") == 0){
             //socketServer start
-            std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>();
+            std::shared_ptr<ServerSocket> serverSocket = std::make_shared<ServerSocket>(configLib.readSocketServerPort());
             serialReaderLib1->setServerSocket(serverSocket);
             serialReaderLib2->setServerSocket(serverSocket);
         } else if(strcmp(argv[i], "-file") == 0){

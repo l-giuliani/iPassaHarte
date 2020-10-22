@@ -4,8 +4,8 @@
 
 #include "ServerSocket.h"
 #include <iostream>
-ServerSocket::ServerSocket(){
-    std::shared_ptr<tcp::acceptor> acceptor = std::make_shared<tcp::acceptor>(this->io_service, tcp::endpoint(tcp::v4(), 23));
+ServerSocket::ServerSocket(uint32_t port){
+    std::shared_ptr<tcp::acceptor> acceptor = std::make_shared<tcp::acceptor>(this->io_service, tcp::endpoint(tcp::v4(), port));
     this->taskAcceptConnetions = std::make_shared<std::thread>(&ServerSocket::acceptConnections, this, acceptor);
 }
 
