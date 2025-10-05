@@ -1,6 +1,6 @@
 # iPassaHarte  
 ### What is iPassaHarte  
-iPassaHarte is a software that opens two configurable serial connections, it waits for incoming data from this connections and redirect data readed to the other serial port. Before redirect data from one serial port to the other it dispays data on the screen in both ASCII and HEX form.  
+iPassaHarte is a software that opens two configurable serial connections, it waits for incoming data from these connections and redirect data readed to the other serial port. Before redirect data from one serial port to the other it dispays data on the screen in both ASCII and HEX form.  
 It is also possible to display data incoming from serial ports sending them through socket starting the application with -socket param, you can develop your own sniffer socket client or use the already existing [iPassaHarteGui](https://github.com/l-giuliani/iPassaHarteGui).
 Actually you can:  
 - open a maximum of ten clients to sniff data
